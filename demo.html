@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Using Node @ IBM</title>
+    <meta name="description" content="A survival guide for FEDs">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link id="theme" rel="stylesheet" href="css/theme/ibm.css">
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+      
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1 class="no-margin">Using Node @ IBM</h1>
+          <h3 class="no-margin">A survival guide for FEDs</h3>
+          <p>Diego Hernandez and Jason Lengstorf</p>
+        </section>
+        <section>
+          <h1>Node vs. JavaScript</h1>
+          <p>What’s the difference?</p>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h2>JavaScript</h2>
+            <ul>
+              <li class="fragment">Runs on browser</li>
+              <li class="fragment">Load an html file with a script to run</li>
+              <li class="fragment">`window` is the global object (DOM)</li>
+              <li class="fragment">Cross-origin HTTP request restrictions</li>
+              <li class="fragment">Hardware access (with user's permission)</li>
+              <li class="fragment">Browser sandbox</li>
+            </ul>
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h2>Node</h2>
+            <ul>
+              <li class="fragment">No DOM</li>
+              <li class="fragment">Run via `node` command in command line</li>
+              <li class="fragment">Operating system info (`os`)</li>
+              <li class="fragment">File system access and manipulation (`fs`, `path`, `zlib`)</li>
+              <li class="fragment">Create servers and clients (`http`, `net`)</li>
+              <li class="fragment">No cross-origin HTTP request restrictions!</li>
+              <li class="fragment">Access to local database servers</li>
+            </ul>
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h2>JavaScript is JavaScript</h2>
+            <p>Node and JavaScript are the same for the most part</p>
+          </script>
+        </section>
+        <section>
+          <h1>How Node Works:<br>The Event Loop</h1>
+          <ul>
+            <li class="fragment">To prevent blocking, tasks are offloaded to the system kernel</li>
+            <li class="fragment">Node runs in a loop that checks for tasks and offloads them</li>
+            <li class="fragment">Except during a very brief period while checking for new tasks, the loop is non-blocking</li>
+          </ul>
+        </section>
+        <section>
+          <p><small>(This isn’t really something you <em>need</em> to know; it’s just what makes Node fast.)</small></p>
+        </section>
+        <section>
+          <h2>Streams</h2>
+          <p>Getting the data flowing</p>
+        </section>
+        <section>
+          <h3>Making HTTP Request</h3>
+          <pre><code class="language-javascript">const http = require('http');
+const options = { /* HTTP request options */ };
+
+const request = http.request(options, (response) => {
+  // Handle response data chunks.
+  response.on('data', (chunk) => { doSomething(JSON.parse(chunk)); });
+
+  // Handle end of response data stream.
+  response.on('end', () => { console.log('No more data left'); });
+});
+
+// Handle request error event.
+request.on('error', (error) => { console.error(error) });
+
+// End the request stream.
+request.end();
+</code></pre>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h3>What are streams?</h3>
+            <ul>
+              <li class="fragment">A continuous flow of data</li>
+              <li class="fragment">Are either readable, writable, or both (duplex)</li>
+              <li class="fragment">Streams are pipeable (input → output)</li>
+              <li class="fragment">Data broken up into smaller "chunks"</li>
+              <li class="fragment">Make Node programs require less memory</li>
+              <li class="fragment">Data "chunks" are Buffers (address in memory)</li>
+              <li class="fragment">Emit events: `data`, `end`, `error`
+                <pre><code class="language-javascript">response.on('data', (data) => {
+  console.log(JSON.parse(data));
+});
+</code></pre>
+              </li>
+            </ul>
+          </script>
+        </section>
+        <section>
+          <h3>Playing with streams</h3>
+          <p>Manual approach</p>
+          <pre><code class="language-javascript">const fs = require('fs');
+
+// Creates a readable stream.
+const readStream = fs.createReadStream('./files/data.csv');
+
+// Manually read each chunk when stream is ready to be read.
+readStream.on('readable', () => {
+  let chunk = readStream.read();
+
+  // Run as long as the stream continues to flow data.
+  while(chunk) {
+    process.stdout.write(chunk);
+    chunk = readStream.read();
+  }
+});
+</code></pre>
+        </section>
+        <section>
+          <h3>Playing with streams</h3>
+          <p>Event-driven approach</p>
+          <pre><code class="language-javascript">const fs = require('fs');
+const readStream = fs.createReadStream('./files/data.csv');
+
+// Listen to data events.
+readStream.on('data', (data) => {
+  process.stdout.write(data);
+});
+</code></pre>
+        </section>
+        <section>
+          <h3>Playing with streams</h3>
+          <p>Piping approach</p>
+          <pre><code class="language-javascript">const fs = require('fs');
+const readStream = fs.createReadStream('./files/data.csv');
+
+// Pipe the read stream to writable stdout stream.
+readStream.pipe(process.stdout);
+</code></pre>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h3>Streams are<br>everywhere in Node</h3>
+            <ul>
+              <li>Natively: `fs`, `http`, `process.stdin`, `process.stdout`</li>
+              <li>Frameworks: `express`</li>
+              <li>Build tools: `gulp`</li>
+            </ul>
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h2 class="no-margin">NPM</h2>
+            <h3>Node Package Manager</h3>
+            <ul>
+              <li class="fragment">A way to publish and download JavaScript modules</li>
+              <li class="fragment">NPM resgistry at IBM: http://npm.whitewater.ibm.com/</li>
+              <li class="fragment">Package documentation for projects: `package.json`</li>
+              <li class="fragment">Always have a `package.json`
+                <pre><code class="language-bash">$ npm init --yes
+</code></pre>
+              </li>
+            </ul>
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h3>Dependencies</h3>
+            <pre><code class="language-json">{
+  "name": "my-app",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "~4.13.3",
+    "pug": "~2.0.0"
+  },
+  "devDependencies": {
+    "gulp": "~3.9.1",
+    "gulp-sass": "~3.1.0",
+    "gulp-util": "~3.0.8"
+  }
+}</code></pre>
+            <p>`dependencies` for production services (Bluemix, Heroku).</p>
+            <p>`devDependencies` for development only.</p>
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h3>Lockfiles</h3>
+            <ul>
+              <li>Ensure same package versions downloaded</li>
+              <li>Created when using Yarn or NPM v5</li>
+            </ul>
+          </script>
+        </section>
+        <section>
+          <h1>Building Servers</h1>
+          <p>An intro to Express, our server of choice.</p>
+        </section>
+        <section>
+          <h2>Why Express?</h2>
+          <ul>
+            <li class="fragment">Easy to create HTTP servers without overhead</li>
+            <li class="fragment">Unopinionated about routing, templating, file structure</li>
+            <li class="fragment">Most popular Node application framework</li>
+            <li class="fragment">Middleware</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Routing</h2>
+          <pre><code class="language-bash">$ npm install express --save</code></pre>
+          <pre><code class="language-javascript">const express = require('express');
+const app = express();
+
+app.get('/api/users/:id', async (req, res) => {
+  const userId = req.params.id;
+  const user = await Users.getById(userId);
+  res.json(user);
+});
+
+app.listen(8000, () => console.log('Listening on 8000'));
+</code></pre>
+        </section>
+        <section>
+          <h3>Creating an app</h3>
+          <pre><code class="language-javascript">const express = require('express');
+const app = express();
+</code></pre>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h3>Handling `GET` requests</h3>
+            <pre><code class="language-javascript">app.get('/api/users/:id', async (req, res) => {
+</code></pre>
+          </script>
+        </section>
+        <section>
+          <h3>Named parameters</h3>
+          <pre><code class="language-javascript">app.get('/api/users/:id', async (req, res) => {
+  const userId = req.params.id;
+  ...
+</code></pre>
+        </section>
+        <section>
+          <h3>Respond with JSON</h3>
+          <pre><code class="language-javascript">  ...
+  const user = await Users.getById(userId);
+  res.json(user);
+});
+</code></pre>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h3>Listening on port</h3>
+            <pre><code class="language-javascript">app.listen(8000, () => console.log('Listening on 8000'));
+</code></pre>
+          </script>
+        </section>
+        <section>
+          <h3>Responding to POST requests</h3>
+          <pre><code class="language-bash">$ npm install express body-parser --save</code></pre>
+          <pre><code class="language-javascript">const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+
+// Parse application/x-www-form-urlencoded request payload
+app.use(bodyParser.uslencoded({ extended: false }));
+
+// Parse application/json request payload
+app.use(bodyParser.json());
+
+app.post('/api/users/create', (req, res) => {
+  // Create user with parsed request payload
+  const user = Users.create(req.body);
+  res.json(user);
+});
+</code></pre>
+        </section>
+        <section>
+          <h2>Middleware</h2>
+          <p>Software that runs in the "middle"</p><img src="https://spin.atomicobject.com/wp-content/uploads/swiss-cheese-header.jpg">
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h3>What is middleware?</h3>
+            <ul>
+              <li class="fragment">Standardized narrow-focus functions to make our lives easier</li>
+              <li class="fragment">Have access to request and response objects</li>
+              <li class="fragment">Executes code and passes to next middleware</li>
+              <li class="fragment">Can end request processing</li>
+            </ul>
+          </script>
+        </section>
+        <section>
+          <h3>Use for all requests</h3>
+          <pre><code class="language-javascript">const app = require('express')();
+
+// Logs request methods (GET, POST, PUT, etc)
+app.use((req, res, next) => {
+  console.log('Request Method: ', req.method);
+  next();
+});
+</code></pre>
+        </section>
+        <section>
+          <h3>Specific routes and methods</h3>
+          <pre><code class="language-javascript">const app = require('express')();
+
+// Check that API key has been supplied
+app.get('/api', (req, res, next) => {
+  if (req.body.apiKey === undefined) {
+    next(new Error('An API key must be supplied.'));
+  }
+  next();
+});
+</code></pre>
+        </section>
+        <section>
+          <h3>Middleware chaining</h3>
+          <pre><code class="language-javascript">const app = require('express')();
+const isAuthenticated = require('./util/passport');
+
+app.post('/api', isAuthenticated, (req, res) => {
+  // Handle request here
+});
+</code></pre>
+        </section>
+        <section>
+          <h3>Error handling middleware</h3>
+          <pre><code class="language-javascript">const app = require('express')();
+
+// Send error message back to client
+app.use('/api', (err, req, res, next) => {
+  res.status('403').send(err.message);
+});
+</code></pre>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h3>Middleware gotchas</h3>
+            <ul>
+              <li class="fragment">Always call `next` or end response</li>
+              <li class="fragment">Order matters</li>
+              <li class="fragment">Be aware of scope of middleware (routes, methods)</li>
+            </ul>
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            <h3>Useful middleware</h3>
+            <ul>
+              <li class="fragment">[`express.static`](http://expressjs.com/en/api.html#express.static): Serve static files</li>
+              <li class="fragment">[`body-parser`](https://github.com/expressjs/body-parser): Parse request payloads into JS object</li>
+              <li class="fragment">[`passport`](http://passportjs.org/): Authentication handler for Node</li>
+              <li class="fragment">[`morgan`](https://github.com/expressjs/morgan): Log all requests</li>
+              <li class="fragment">[`compression`](https://github.com/expressjs/compression): Compress responses (gzip)</li>
+            </ul>
+          </script>
+        </section>
+        <section>
+          <h2>Templating</h2>
+          <ul>
+            <li class="fragment">Dust.js (http://www.dustjs.com/)</li>
+            <li class="fragment">Pug (https://pugjs.org)</li>
+            <li class="fragment">Mustache (http://mustache.github.io/)</li>
+            <li class="fragment">EJS (http://www.embeddedjs.com/)</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Templates in Bluemix are usually Dust.</h3>
+          <pre><code class="js">function configureDustTemplates(app) {
+  // Tell Express where to look for Dust templates.
+  app.set('views', path.join(__dirname, '../views'));
+
+  // Configure Express to use Dust as its template engine.
+  app.engine(
+    'dust',
+    adaro.dust({
+      cache: process.env.NODE_ENV === 'production',
+      helpers: [dustCachingHelpers],
+    })
+  );
+  app.set('view engine', 'dust');
+}
+</code></pre>
+        </section>
+        <section>
+          <h3>Templates in Bluemix are usually Dust.</h3>
+          <pre><code class="sh">&lt;!doctype html>
+&lt;html>
+&lt;head>
+    <title id="titleElement">{appTitle}</title>
+    {>"partials/app_head"/}
+&lt;/head>
+&lt;body role="application" aria-label="{mainAriaLabel}">
+  {?BLUEMIX_ENABLED}
+    {header|s}
+  {:else}
+    {>"partials/mock_header"/}
+  {/BLUEMIX_ENABLED}
+
+  <main class="app-content"><!-- content! --></main>
+
+  {>"partials/scripts"/}
+&lt;/body>
+&lt;/html>
+</code></pre>
+        </section>
+        <section>
+          <h3>Keep things sane.</h3>
+          <ul>
+            <li class="fragment">Choose a place for business logic</li>
+            <li class="fragment">Avoid stacking template systems</li>
+          </ul>
+        </section>
+        <section>
+          <h1>Authentication</h1>
+          <p>How we control who can access our apps.</p>
+        </section>
+        <section>
+          <h1>Babel</h1>
+          <p>Write the same code in Node or the browser.</p>
+        </section>
+        <section>
+          <h3>Install Babel + Presets & Plugins</h3>
+          <pre><code class="sh">npm install --save-dev babel-cli babel-preset-env
+</code></pre>
+        </section>
+        <section>
+          <h3>Configure Babel with a `.babelrc`</h3>
+          <pre><code class="json">{
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
+  ],
+  "ignore": ["node_modules/**"]
+}
+</code></pre>
+        </section>
+        <section>
+          <h3>Add two new scripts to your <code>package.json</code>:</h3>
+          <pre><code class="json">"scripts": {
+  "serve": "nodemon src/server.js --exec babel-node",
+  "build": "babel src -d dist"
+}</code></pre>
+          <p>To develop:</p>
+          <pre><code class="sh">npm run serve
+</code></pre>
+        </section>
+        <section>
+          <h3>Write Node just like you would front-end JS</h3>
+          <pre><code class="js">import path from 'path';
+
+export const getFullPath = relPath => {
+  const rootDir = process.cwd();
+
+  return path.resolve(rootDir, relPath);
+}
+</code></pre>
+        </section>
+        <section>
+          <h3>This is helpful for a few reasons</h3>
+          <ul>
+            <li class="fragment">It lets JavaScript just be JavaScript</li>
+            <li class="fragment">No mental overhead for syntax switching</li>
+            <li class="fragment">Modules can be shared between client- and server-side</li>
+            <li class="fragment">Node is working to introduce ES module syntax natively</li>
+            <li class="fragment">Eventually, Babel won’t be required</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Caveats:</h3>
+          <ul>
+            <li class="fragment">Node built-ins, such as <code>fs</code>, won’t work in client-side code</li>
+            <li class="fragment">Node built-ins that <em>do</em> work require a bunder like Webpack</li>
+            <li class="fragment">Front-end APIs, such as the web audio API, won’t work in Node
+              <ul>
+                <li class="fragment">...but you can find a Node-friendly port of the API</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h1>Questions?</h1>
+          <p>Find us on Slack:<br>@diego.hernandez and @jlengstorf</p>
+        </section>
+      </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        history: true,
+        transition: 'none',
+        backgroundTransition: 'none',
+      
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+      
+    </script>
+  </body>
+</html>

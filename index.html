@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sample Lecture Template</title>
+    <meta name="description" content="how it's done with reveal">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link id="theme" rel="stylesheet" href="css/theme/ibm.css">
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+      
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-background="images/ibmcode-title.png">
+          <h1 class="nomargin" style="color:white;">Sample Lecture Template</h1>
+          <h3 class="nomargin" style="color:white;">how it's done with reveal</h3>
+          <p class="nomargin" style="color:white;">Client Developer Advocacy</p>
+        </section>
+        <section data-markdown data-background="images/ibmcode-white.png">
+          <script type="text/template">
+            # Title
+            ## using markdown
+            
+            1.  and a short
+            2.  ordered list
+            3.  with a final item
+            
+            ```
+            +slide(data-markdown=true, data-background="images/ibmcode-white.png").
+              # Title
+              ## using markdown
+            ```
+            **note** markdown lists display all in one go
+            
+          </script>
+        </section>
+        <section data-markdown data-background="images/ibmcode-white.png">
+          <script type="text/template">
+            ### Did somebody mention there needed to be a dragon example?
+            
+            ![magma dragon](images/magma_dragon_by_tsaoshin.png)
+            
+          </script>
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h1>Using pug...</h1>
+          <p>html tags are automatically added for elements</p>
+          <pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+  fmt.Println("hello world")
+}
+</code></pre>
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h2>List example: Properties of JavaScript</h2>
+          <ul>
+            <li class="fragment">Runs on browser</li>
+            <li class="fragment">Load an html file with a script to run</li>
+            <li class="fragment">`window` is the global object (DOM)</li>
+            <li class="fragment">Cross-origin HTTP request restrictions</li>
+            <li class="fragment">Hardware access (with user's permission)</li>
+            <li class="fragment">Browser sandbox</li>
+          </ul>
+        </section>
+        <section data-background="images/ibmcode-green.png">
+          <h3 style="color:white;">Use style attribute on tags to change text color</h3>
+          <ol>
+            <li class="fragment" style="color:white;">Ordered list item 1</li>
+            <li class="fragment" style="color:white;">Ordered list item 2</li>
+            <li class="fragment" style="color:white;">...</li>
+            <li class="fragment" style="color:white;">Ordered list item n</li>
+          </ol>
+        </section>
+        <section data-background="images/ibmcode-photo1.png">
+          <h2 style="color:black; width:60%;">Use css width to shift content relative to slide</h2>
+          <ul>
+            <li class="fragment" style="color:black;">works with list items as well</li>
+          </ul>
+        </section>
+        <section data-background="images/ibmcode-photo2.png">
+        </section>
+        <section data-background="images/ibmcode-photo3.png">
+        </section>
+      </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        history: true,
+        transition: 'none',
+        backgroundTransition: 'none',
+      
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+      
+    </script>
+  </body>
+</html>

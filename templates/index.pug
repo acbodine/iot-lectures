@@ -1,0 +1,85 @@
+//- Use the presentation layout so we can keep this clean
+extends layouts/presentation
+
+//- Customize the title, meta description, and author using this block.
+block append config
+  -
+    config.title = 'Sample Lecture Template';
+    config.description = 'how it\'s done with reveal';
+
+    config.author = {
+      name: 'Client Developer Advocacy',
+      email: 'daentpoc@us.ibm.com',
+    };
+
+    config.theme = 'ibm';
+  -
+
+//- Add your slides here. See templates/includes/_mixins.pug for information
+//- on how `+slide` works.
+block slides
+  //- TITLE SLIDE with pug and style override
+  +slide(data-background="images/ibmcode-title.png")
+    h1(style="color:white").nomargin= config.title
+    h3(style="color:white").nomargin= config.description
+    p(style="color:white").nomargin= config.author.name
+
+  +slide(data-markdown=true, data-background="images/ibmcode-white.png").
+    # Title
+    ## using markdown
+
+    1.  and a short
+    2.  ordered list
+    3.  with a final item
+
+    ```
+    +slide(data-markdown=true, data-background="images/ibmcode-white.png").
+      # Title
+      ## using markdown
+    ```
+    **note** markdown lists display all in one go
+
+  +slide(data-markdown=true, data-background="images/ibmcode-white.png").
+      ### Did somebody mention there needed to be a dragon example?
+
+      ![magma dragon](images/magma_dragon_by_tsaoshin.png)
+
+  +slide(data-background="images/ibmcode-white.png")
+    h1 Using pug...
+    p html tags are automatically added for elements
+
+    pre
+      code.language-go.
+        package main
+        import "fmt"
+
+        func main() {
+          fmt.Println("hello world")
+        }
+
+  +slide(data-background="images/ibmcode-white.png")
+    h2 List example: Properties of JavaScript
+    ul
+      li.fragment Runs on browser
+      li.fragment Load an html file with a script to run
+      li.fragment `window` is the global object (DOM)
+      li.fragment Cross-origin HTTP request restrictions
+      li.fragment Hardware access (with user's permission)
+      li.fragment Browser sandbox
+
+  +slide(data-background="images/ibmcode-green.png")
+    h3(style="color:white") Use style attribute on tags to change text color
+    ol
+      li.fragment(style="color:white") Ordered list item 1
+      li.fragment(style="color:white") Ordered list item 2
+      li.fragment(style="color:white") ...
+      li.fragment(style="color:white") Ordered list item n
+
+  +slide(data-background="images/ibmcode-photo1.png")
+    h2(style="color:black; width:60%") Use css width to shift content relative to slide
+    ul
+      li.fragment(style="color:black") works with list items as well
+
+  +slide(data-background="images/ibmcode-photo2.png")
+
+  +slide(data-background="images/ibmcode-photo3.png")

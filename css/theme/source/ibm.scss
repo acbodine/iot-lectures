@@ -1,0 +1,49 @@
+// IBM Bluemix Theme for Reveal.js
+
+// Default mixins and settings -----------------
+@import '../template/mixins';
+@import '../template/settings';
+// ---------------------------------------------
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: #fff;
+
+$mainColor: #5a6872;
+$headingColor: #152934;
+
+$mainFontSize: 32px;
+$mainFont: 'IBM Plex Sans', 'IBM Helvetica', 'Helvetica Neue', HelveticaNeue, Helvetica, sans-serif;
+$headingFont: 'IBM Plex Sans', 'IBM Helvetica', 'Helvetica Neue', HelveticaNeue, Helvetica, sans-serif;
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingTextTransform: none;
+$headingFontWeight: 700;
+$linkColor: #3d70b2;
+$linkColorHover: lighten($linkColor, 15%);
+$selectionBackgroundColor: lighten($linkColor, 25%);
+
+$heading1Size: 2.5em;
+$heading2Size: 2em;
+$heading3Size: 1.375em;
+$heading4Size: 1.0em;
+
+
+// Theme template ------------------------------
+@import '../template/theme';
+// ---------------------------------------------
+
+.reveal {
+  img {
+    max-height: 70vh;
+
+    &.no-border {
+      border: none;
+      box-shadow: none;
+    }
+  }
+
+  .no-margin {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

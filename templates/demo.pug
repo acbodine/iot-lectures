@@ -1,0 +1,497 @@
+//- Use the presentation layout so we can keep this clean
+extends layouts/presentation
+
+//- Customize the title, meta description, and author using this block.
+block append config
+  -
+    config.title = 'Using Node @ IBM';
+    config.description = 'A survival guide for FEDs';
+
+    config.author = {
+      name: 'Diego Hernandez and Jason Lengstorf',
+      email: 'jason.lengstorf@ibm.com',
+    };
+
+    config.theme = 'ibm';
+  -
+
+//- Add your slides here. See templates/includes/_mixins.pug for information
+//- on how `+slide` works.
+block slides
+  //- TITLE SLIDE
+  +slide
+    h1.no-margin= config.title
+    h3.no-margin= config.description
+    p= config.author.name
+
+  +slide
+    h1 Node vs. JavaScript
+    p What’s the difference?
+
+  +slide(data-markdown=true)
+    h2 JavaScript
+    ul
+      li.fragment Runs on browser
+      li.fragment Load an html file with a script to run
+      li.fragment `window` is the global object (DOM)
+      li.fragment Cross-origin HTTP request restrictions
+      li.fragment Hardware access (with user's permission)
+      li.fragment Browser sandbox
+
+  +slide(data-markdown=true)
+    h2 Node
+    ul
+      li.fragment No DOM
+      li.fragment Run via `node` command in command line
+      li.fragment Operating system info (`os`)
+      li.fragment File system access and manipulation (`fs`, `path`, `zlib`)
+      li.fragment Create servers and clients (`http`, `net`)
+      li.fragment No cross-origin HTTP request restrictions!
+      li.fragment Access to local database servers
+
+  +slide(data-markdown=true)
+    h2 JavaScript is JavaScript
+    p Node and JavaScript are the same for the most part
+
+  +slide
+    h1 How Node Works:#[br]The Event Loop
+    ul
+      li.fragment To prevent blocking, tasks are offloaded to the system kernel
+      li.fragment Node runs in a loop that checks for tasks and offloads them
+      li.fragment Except during a very brief period while checking for new tasks, the loop is non-blocking
+
+  +slide
+    p
+      small (This isn’t really something you #[em need] to know; it’s just what makes Node fast.)
+
+  +slide
+    h2 Streams
+    p Getting the data flowing
+
+  +slide
+    h3 Making HTTP Request
+    pre
+      code.language-javascript.
+        const http = require('http');
+        const options = { /* HTTP request options */ };
+
+        const request = http.request(options, (response) => {
+          // Handle response data chunks.
+          response.on('data', (chunk) => { doSomething(JSON.parse(chunk)); });
+
+          // Handle end of response data stream.
+          response.on('end', () => { console.log('No more data left'); });
+        });
+
+        // Handle request error event.
+        request.on('error', (error) => { console.error(error) });
+
+        // End the request stream.
+        request.end();
+
+  +slide(data-markdown=true)
+    h3 What are streams?
+    ul
+      li.fragment A continuous flow of data
+      li.fragment Are either readable, writable, or both (duplex)
+      li.fragment Streams are pipeable (input → output)
+      li.fragment Data broken up into smaller "chunks"
+      li.fragment Make Node programs require less memory
+      li.fragment Data "chunks" are Buffers (address in memory)
+      li.fragment Emit events: `data`, `end`, `error`
+        pre
+          code.language-javascript.
+            response.on('data', (data) => {
+              console.log(JSON.parse(data));
+            });
+
+  +slide
+    h3 Playing with streams
+    p Manual approach
+    pre
+      code.language-javascript.
+        const fs = require('fs');
+
+        // Creates a readable stream.
+        const readStream = fs.createReadStream('./files/data.csv');
+
+        // Manually read each chunk when stream is ready to be read.
+        readStream.on('readable', () => {
+          let chunk = readStream.read();
+
+          // Run as long as the stream continues to flow data.
+          while(chunk) {
+            process.stdout.write(chunk);
+            chunk = readStream.read();
+          }
+        });
+
+  +slide
+    h3 Playing with streams
+    p Event-driven approach
+    pre
+      code.language-javascript.
+        const fs = require('fs');
+        const readStream = fs.createReadStream('./files/data.csv');
+
+        // Listen to data events.
+        readStream.on('data', (data) => {
+          process.stdout.write(data);
+        });
+
+  +slide
+    h3 Playing with streams
+    p Piping approach
+    pre
+      code.language-javascript.
+        const fs = require('fs');
+        const readStream = fs.createReadStream('./files/data.csv');
+
+        // Pipe the read stream to writable stdout stream.
+        readStream.pipe(process.stdout);
+
+  +slide(data-markdown=true)
+    h3 Streams are#[br]everywhere in Node
+    ul
+      li Natively: `fs`, `http`, `process.stdin`, `process.stdout`
+      li Frameworks: `express`
+      li Build tools: `gulp`
+
+  +slide(data-markdown=true)
+    h2.no-margin NPM
+    h3 Node Package Manager
+    ul
+      li.fragment A way to publish and download JavaScript modules
+      li.fragment NPM resgistry at IBM: http://npm.whitewater.ibm.com/
+      li.fragment Package documentation for projects: `package.json`
+      li.fragment Always have a `package.json`
+        pre
+          code.language-bash.
+            $ npm init --yes
+
+  +slide(data-markdown=true)
+    h3 Dependencies
+    pre
+      code.language-json.
+        {
+          "name": "my-app",
+          "version": "1.0.0",
+          "dependencies": {
+            "express": "~4.13.3",
+            "pug": "~2.0.0"
+          },
+          "devDependencies": {
+            "gulp": "~3.9.1",
+            "gulp-sass": "~3.1.0",
+            "gulp-util": "~3.0.8"
+          }
+        }
+    p `dependencies` for production services (Bluemix, Heroku).
+    p `devDependencies` for development only.
+
+  +slide(data-markdown=true)
+    h3 Lockfiles
+    ul
+      li Ensure same package versions downloaded
+      li Created when using Yarn or NPM v5
+
+  +slide
+    h1 Building Servers
+    p An intro to Express, our server of choice.
+
+  +slide
+    h2 Why Express?
+    ul
+      li.fragment Easy to create HTTP servers without overhead
+      li.fragment Unopinionated about routing, templating, file structure
+      li.fragment Most popular Node application framework
+      li.fragment Middleware
+
+  +slide
+    h2 Routing
+    pre
+      code.language-bash.
+        $ npm install express --save
+    pre
+      code.language-javascript.
+        const express = require('express');
+        const app = express();
+
+        app.get('/api/users/:id', async (req, res) => {
+          const userId = req.params.id;
+          const user = await Users.getById(userId);
+          res.json(user);
+        });
+
+        app.listen(8000, () => console.log('Listening on 8000'));
+
+  +slide
+    h3 Creating an app
+    pre
+      code.language-javascript.
+        const express = require('express');
+        const app = express();
+
+  +slide(data-markdown=true)
+    h3 Handling `GET` requests
+    pre
+      code.language-javascript.
+        app.get('/api/users/:id', async (req, res) => {
+
+  +slide
+    h3 Named parameters
+    pre
+      code.language-javascript.
+        app.get('/api/users/:id', async (req, res) => {
+          const userId = req.params.id;
+          ...
+
+  +slide
+    h3 Respond with JSON
+    pre
+      code.language-javascript.
+          ...
+          const user = await Users.getById(userId);
+          res.json(user);
+        });
+
+  +slide(data-markdown=true)
+    h3 Listening on port
+    pre
+      code.language-javascript.
+        app.listen(8000, () => console.log('Listening on 8000'));
+
+  +slide
+    h3 Responding to POST requests
+    pre
+      code.language-bash.
+        $ npm install express body-parser --save
+    pre
+      code.language-javascript.
+        const express = require('express');
+        const bodyParser = require('body-parser');
+        const app = express();
+
+        // Parse application/x-www-form-urlencoded request payload
+        app.use(bodyParser.uslencoded({ extended: false }));
+
+        // Parse application/json request payload
+        app.use(bodyParser.json());
+
+        app.post('/api/users/create', (req, res) => {
+          // Create user with parsed request payload
+          const user = Users.create(req.body);
+          res.json(user);
+        });
+
+  +slide
+    h2 Middleware
+    p Software that runs in the "middle"
+    img(src='https://spin.atomicobject.com/wp-content/uploads/swiss-cheese-header.jpg')
+
+  +slide(data-markdown=true)
+    h3 What is middleware?
+    ul
+      li.fragment Standardized narrow-focus functions to make our lives easier
+      li.fragment Have access to request and response objects
+      li.fragment Executes code and passes to next middleware
+      li.fragment Can end request processing
+
+  +slide
+    h3 Use for all requests
+    pre
+      code.language-javascript.
+        const app = require('express')();
+
+        // Logs request methods (GET, POST, PUT, etc)
+        app.use((req, res, next) => {
+          console.log('Request Method: ', req.method);
+          next();
+        });
+
+  +slide
+    h3 Specific routes and methods
+    pre
+      code.language-javascript.
+        const app = require('express')();
+
+        // Check that API key has been supplied
+        app.get('/api', (req, res, next) => {
+          if (req.body.apiKey === undefined) {
+            next(new Error('An API key must be supplied.'));
+          }
+          next();
+        });
+
+  +slide
+    h3 Middleware chaining
+    pre
+      code.language-javascript.
+        const app = require('express')();
+        const isAuthenticated = require('./util/passport');
+
+        app.post('/api', isAuthenticated, (req, res) => {
+          // Handle request here
+        });
+
+  +slide
+    h3 Error handling middleware
+    pre
+      code.language-javascript.
+        const app = require('express')();
+
+        // Send error message back to client
+        app.use('/api', (err, req, res, next) => {
+          res.status('403').send(err.message);
+        });
+
+  +slide(data-markdown=true)
+    h3 Middleware gotchas
+    ul
+      li.fragment Always call `next` or end response
+      li.fragment Order matters
+      li.fragment Be aware of scope of middleware (routes, methods)
+
+  +slide(data-markdown=true)
+    h3 Useful middleware
+    ul
+      li.fragment [`express.static`](http://expressjs.com/en/api.html#express.static): Serve static files
+      li.fragment [`body-parser`](https://github.com/expressjs/body-parser): Parse request payloads into JS object
+      li.fragment [`passport`](http://passportjs.org/): Authentication handler for Node
+      li.fragment [`morgan`](https://github.com/expressjs/morgan): Log all requests
+      li.fragment [`compression`](https://github.com/expressjs/compression): Compress responses (gzip)
+
+  +slide
+    h2 Templating
+    ul
+      li.fragment Dust.js (http://www.dustjs.com/)
+      li.fragment Pug (https://pugjs.org)
+      li.fragment Mustache (http://mustache.github.io/)
+      li.fragment EJS (http://www.embeddedjs.com/)
+
+  +slide
+    h3 Templates in Bluemix are usually Dust.
+    pre
+      code.js.
+        function configureDustTemplates(app) {
+          // Tell Express where to look for Dust templates.
+          app.set('views', path.join(__dirname, '../views'));
+
+          // Configure Express to use Dust as its template engine.
+          app.engine(
+            'dust',
+            adaro.dust({
+              cache: process.env.NODE_ENV === 'production',
+              helpers: [dustCachingHelpers],
+            })
+          );
+          app.set('view engine', 'dust');
+        }
+
+  +slide
+    h3 Templates in Bluemix are usually Dust.
+    pre
+      code.sh.
+        &lt;!doctype html>
+        &lt;html>
+        &lt;head>
+            <title id="titleElement">{appTitle}</title>
+            {>"partials/app_head"/}
+        &lt;/head>
+        &lt;body role="application" aria-label="{mainAriaLabel}">
+          {?BLUEMIX_ENABLED}
+            {header|s}
+          {:else}
+            {>"partials/mock_header"/}
+          {/BLUEMIX_ENABLED}
+
+          <main class="app-content"><!-- content! --></main>
+
+          {>"partials/scripts"/}
+        &lt;/body>
+        &lt;/html>
+
+  +slide
+    h3 Keep things sane.
+    ul
+      li.fragment Choose a place for business logic
+      li.fragment Avoid stacking template systems
+
+  +slide
+    h1 Authentication
+    p How we control who can access our apps.
+
+  +slide
+    h1 Babel
+    p Write the same code in Node or the browser.
+
+  +slide
+    h3 Install Babel + Presets & Plugins
+    pre
+      code.sh.
+        npm install --save-dev babel-cli babel-preset-env
+
+  +slide
+    h3 Configure Babel with a `.babelrc`
+    pre
+      code.json.
+        {
+          "presets": [
+            [
+              "env",
+              {
+                "targets": {
+                  "node": "current"
+                }
+              }
+            ]
+          ],
+          "ignore": ["node_modules/**"]
+        }
+
+  +slide
+    h3 Add two new scripts to your #[code package.json]:
+    pre
+      code.json.
+        "scripts": {
+          "serve": "nodemon src/server.js --exec babel-node",
+          "build": "babel src -d dist"
+        }
+    p To develop:
+    pre
+      code.sh.
+        npm run serve
+
+  +slide
+    h3 Write Node just like you would front-end JS
+    pre
+      code.js.
+        import path from 'path';
+
+        export const getFullPath = relPath => {
+          const rootDir = process.cwd();
+
+          return path.resolve(rootDir, relPath);
+        }
+
+  +slide
+    h3 This is helpful for a few reasons
+    ul
+      li.fragment It lets JavaScript just be JavaScript
+      li.fragment No mental overhead for syntax switching
+      li.fragment Modules can be shared between client- and server-side
+      li.fragment Node is working to introduce ES module syntax natively
+      li.fragment Eventually, Babel won’t be required
+
+  +slide
+    h3 Caveats:
+    ul
+      li.fragment Node built-ins, such as #[code fs], won’t work in client-side code
+      li.fragment Node built-ins that #[em do] work require a bunder like Webpack
+      li.fragment Front-end APIs, such as the web audio API, won’t work in Node
+        ul
+          li.fragment ...but you can find a Node-friendly port of the API
+
+  +slide
+    h1 Questions?
+    p Find us on Slack:#[br]@diego.hernandez and @jlengstorf
