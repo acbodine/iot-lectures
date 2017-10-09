@@ -24,7 +24,9 @@ npm start
 
 This start a local server and opens a new tab at `http://localhost:8000/`.
 
-### NOTE: Only edit the `index.pug` file in the templates directory.
+### NOTE: You only need to edit the `index.pug` file in the templates directory.
+
+Presentations built with this template should be kept in a repository separate from other assets used in a loot crate. Ideally, when complete the presentation and associated repository would be located on an public github repository. Turn on Github Pages, which will allow the main presentation on `index.html` to be viewable at https://github.com/<org>/<presentation-repo> .
 
 While developing, changes to `templates/index.pug` will overwrite the `index.html` file in the project root. This means that any changes to `index.html` will be overwritten the next time `index.pug` is saved.
 
@@ -41,7 +43,7 @@ pug: {
     files: {
       "index.html": "templates/index.pug",
       "demo.html": "templates/demo.pug",
-      "myfile.html": "templates/myfile.html"
+      "myfile.html": "templates/myfile.pug"
     }
   }
 },
