@@ -97,7 +97,8 @@ module.exports = function(grunt) {
 				},
 				files: {
 					"index.html": "templates/index.pug",
-					"demo.html": "templates/demo.pug"
+					"demo.html": "templates/demo.pug",
+					"connecting-all-the-things.html": "templates/connecting-all-the-things.pug"
 				}
 			}
 		},

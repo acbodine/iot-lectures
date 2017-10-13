@@ -1,0 +1,64 @@
+//- Use the presentation layout so we can keep this clean
+extends layouts/presentation
+
+//- Customize the title, meta description, and author using this block.
+block append config
+  -
+    config.title = 'Connecting all the Things';
+    config.description = 'The journey to ubiquitous systems';
+
+    config.author = {
+      name: 'Andrew Bodine',
+      email: 'acbodine@us.ibm.com',
+    };
+
+    config.theme = 'ibm';
+  -
+
+//- Add your slides here. See templates/includes/_mixins.pug for information
+//- on how `+slide` works.
+block slides
+  //- TITLE SLIDE
+  +slide(data-background="images/ibmcode-title.png")
+    h1.no-margin= config.title
+    h3.no-margin= config.description
+    p= config.author.name
+
+  +slide(data-background="images/ibmcode-white.png")
+    h1 Internet of Things
+    img(src="images/iot-infographic-212-billion.jpg")
+    p.
+      More than just a technology trend, it is a cultural shift
+
+  +slide(data-background="images/ibmcode-white.png")
+    h1 Superficial Adaptation
+    img(src="")
+    p.
+      Connecting things just for the sake of connecting them.
+
+  +slide(data-background="images/ibmcode-white.png")
+    h1 Adaptation
+    img(src="")
+    p.
+      Getting the hardware right, scaling our infrastructure, and learning to work with the newer, better, and faster programmers emerging in the cognitive era.
+
+  +slide(data-background="images/ibmcode-title-white.png")
+    h1 Hardware
+    p.
+      When "in the field" is a field.
+
+  // TODO:
+
+  +slide(data-background="images/ibmcode-title-white.png")
+    h1 Infrastructure
+    p.
+      The IoT data storm is real.
+
+  // TODO:
+
+  +slide(data-background="images/ibmcode-title-white.png")
+    h1 Developers
+    p.
+      Harness the cognitive era.
+
+  // TODO:
