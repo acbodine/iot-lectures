@@ -18,47 +18,157 @@ block append config
 //- Add your slides here. See templates/includes/_mixins.pug for information
 //- on how `+slide` works.
 block slides
-  //- TITLE SLIDE
-  +slide(data-background="images/ibmcode-title.png")
+
+  +slide(data-background="images/ibmcode-title-white.png")
     h1.no-margin= config.title
     h3.no-margin= config.description
     p= config.author.name
 
+  //
+  // Section: Overview
+  //
+  +slide(data-background="images/ibmcode-photo3.png")
+    h2 Internet of Things
+    p More than just a technology trend, it is a cultural shift
+
   +slide(data-background="images/ibmcode-white.png")
-    h1 Internet of Things
+    h3 The vision
     img(src="images/iot-infographic-212-billion.jpg")
-    p.
-      More than just a technology trend, it is a cultural shift
 
   +slide(data-background="images/ibmcode-white.png")
-    h1 Superficial Adaptation
-    img(src="")
-    p.
-      Connecting things just for the sake of connecting them.
+    h3 Superficial Adaptation
+    img(src="images/ibmcode-photo3.png")
+    p Connecting things just for the sake of connecting them.
 
   +slide(data-background="images/ibmcode-white.png")
-    h1 Adaptation
-    img(src="")
+    h3 Adaptation
+    img(src="images/ibmcode-photo3.png")
     p.
-      Getting the hardware right, scaling our infrastructure, and learning to work with the newer, better, and faster programmers emerging in the cognitive era.
+      Getting the hardware right, scaling our infrastructure, and learning to
+      work with the newer, better, and faster programmers emerging in the
+      cognitive era.
 
+  //
+  // Section: Devices
+  //
+  +slide(data-background="images/ibmcode-photo1.png")
+    h2 Devices
+    p When "in the field" is a field.
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Connectivity
+    img(alt="Connectivity", src="images/ibmcode-photo1.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Tooling
+    img(alt="Tooling", src="images/ibmcode-photo1.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Scaling Production
+    img(alt="Scaling Production", src="images/ibmcode-photo1.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Updates
+    img(alt="Updates", src="images/ibmcode-photo1.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Security
+    img(alt="Security", src="images/ibmcode-photo1.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Certifications
+    img(alt="Certifications", src="images/ibmcode-photo1.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Open Market
+    img(alt="Open Market", src="images/ibmcode-photo1.png")
+
+  //
+  // Section: Data
+  //
+  +slide(data-background="images/ibmcode-photo3.png")
+    h2 Data
+    p The IoT data storm is real.
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Naive Architecture
+    img(alt="Naive Architecture", src="images/ibmcode-photo3.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 At the Edge
+    img(alt="At the Edge", src="images/ibmcode-photo3.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Averaging
+    img(alt="Averaging", src="images/ibmcode-photo3.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Storage Hierarchy
+    img(alt="Storage Hierarchy", src="images/ibmcode-photo3.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Temporal Compression
+    img(alt="Temporal Compression", src="images/ibmcode-photo3.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 In the Cloud
+    img(alt="In the Cloud", src="images/ibmcode-photo3.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Architecture
+    img(alt="Architecture", src="images/ibmcode-photo3.png")
+
+  //
+  // Section: Developers
+  //
+  +slide(data-background="images/ibmcode-photo2.png")
+    h2 Developers
+    p Harness the cognitive era.
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Data Infographic
+
+    p 2.5 quintillion bytes of data created every day.
+    p 90% of the data in the world today has been created in the last two years alone.
+    p Every minute 1.7 megabytes of data is created for every person on the planet. All 7.3 billion of us.
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Dark Data Infographic
+    img(alt="Dark Data Infographic", src="images/ibmcode-photo2.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Tabulating Systems Era
+    img(alt="Tabulating Systems Era", src="images/ibmcode-photo2.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Programmable Systems Era
+    img(alt="Programmable Systems Era", src="images/ibmcode-photo2.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h3 Cognitive Computing Era
+    img(alt="Cognitive Computing Era", src="images/ibmcode-photo2.png")
+
+  //
+  // Section: Summary
+  //
+  +slide(data-background="images/ibmcode-chains.png")
+    h3 Devices
+    p.
+      When "in the field" is a field, there is nothing quite as complicated as
+      simple connectivity.
+
+    h3 Data
+    p.
+      The IoT data storm is real. With the right storage strategy, the burden of
+      IoT data can be greatly reduced.
+
+    h3 Developers
+    p.
+      In the future (15-30 years) programmers will not write code as much as
+      they train machines.
+
+  // Section: Thank You
   +slide(data-background="images/ibmcode-title-white.png")
-    h1 Hardware
-    p.
-      When "in the field" is a field.
-
-  // TODO:
-
-  +slide(data-background="images/ibmcode-title-white.png")
-    h1 Infrastructure
-    p.
-      The IoT data storm is real.
-
-  // TODO:
-
-  +slide(data-background="images/ibmcode-title-white.png")
-    h1 Developers
-    p.
-      Harness the cognitive era.
-
-  // TODO:
+    h2= config.title
+    p= config.author.name
+    p= config.author.email
