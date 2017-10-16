@@ -1,0 +1,25 @@
+//- Use the presentation layout so we can keep this clean
+extends layouts/presentation
+
+//- Customize the title, meta description, and author using this block.
+block append config
+  -
+    config.title = 'IoT in 10 minutes';
+    config.description = '';
+
+    config.author = {
+      name: 'Andrew Bodine',
+      email: 'acbodine@us.ibm.com',
+    };
+
+    config.theme = 'ibm';
+  -
+
+//- Add your slides here. See templates/includes/_mixins.pug for information
+//- on how `+slide` works.
+block slides
+
+  +slide(data-background="images/ibmcode-title-white.png")
+    h1.no-margin= config.title
+    h3.no-margin= config.description
+    p= config.author.name

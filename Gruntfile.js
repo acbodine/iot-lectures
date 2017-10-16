@@ -98,7 +98,9 @@ module.exports = function(grunt) {
 				files: {
 					"index.html": "templates/index.pug",
 					"demo.html": "templates/demo.pug",
-					"connecting-all-the-things.html": "templates/connecting-all-the-things.pug"
+					"iot-in-10-minutes.html": "templates/iot-in-10-minutes.pug",
+					"connecting-all-the-things.html": "templates/connecting-all-the-things.pug",
+					"iot-for-insurance.html": "templates/iot-for-insurance.pug",
 				}
 			}
 		},
