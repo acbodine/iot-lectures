@@ -23,3 +23,342 @@ block slides
     h1.no-margin= config.title
     h3.no-margin= config.description
     p= config.author.name
+
+  +slide(data-background="images/ibmcode-white.png")
+    h2 Outline
+    ul
+      li.fragment Watson IoT Platform
+      li.fragment IoT for Insurance
+      li.fragment Demo: IoT for Insurance
+      li.fragment Lab: Section 1
+      li.fragment Driver Behavior Use-Case
+      li.fragment Demo: Driver Behavior Analysis
+      li.fragment Lab: Section 2
+      li.fragment Backseat Driver Chatbot
+      li.fragment Demo: Chatbot
+      li.fragment Lab: Section 3
+
+  +slide(data-background="images/ibmcode-white.png")
+    h2 Watson IoT Platform
+    h4 Architecture
+
+    img(alt="Watson IoT Platform Architecture", src="images/watson-iot-platform-architecture.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h2 Watson IoT Platform
+
+    ul.no-margin
+      li.fragment Data Management (Normalize)
+      li.fragment Cloud Rules
+      li.fragment APIs
+
+    ul.no-margin
+      li.fragment Organizations
+      li.fragment MQTT Broker
+      li.fragment Devices (Managed/Unmanaged)
+      li.fragment Gateways
+      li.fragment Events
+      li.fragment Applications
+      li.fragment Commands
+
+    aside.notes
+      p.
+        IBM Watson™ IoT Platform provides powerful application access to IoT
+        devices and data to help you rapidly compose analytics applications,
+        visualization dashboards, and mobile IoT apps.
+
+      p.
+        Watson IoT Platform allows you to perform powerful device management
+        operations, and store and access device data, connect a wide variety of
+        devices and gateway devices. Watson IoT Platform provides secure
+        communication to and from your devices by using MQTT and TLS.
+
+      p.
+        The Watson IoT Platform communicates with your applications and devices
+        by using the WatsonA IoT Platform API and the Watson IoT Platform
+        messaging protocol. The Watson IoT Platform dashboard connects as a
+        front-end user interface to simplify operations within the platform.
+        Device data can be stored or used with analytics solutions.
+
+      p.
+        Important concepts in the Watson IoT Platform:
+
+        ul
+          li.fragment Organizations
+            p.
+              When you register with the Watson IoT Platform, you are given an
+              organization ID. Your organization ID is a unique six character
+              identifier for your account. Organizations ensure that your data
+              is only accessible by your devices and applications. After
+              registration, devices and API keys are bound to a single
+              organization. When an application connects to the service by
+              using an API key, it will register to the organization that is
+              associated with the API key that is used.
+
+            p.
+              For your security, it is impossible for cross-organization
+              communication. The only way to transmit data between two
+              organizations is to create an application within each
+              organization that will communicate with applications in the other
+              organization.
+
+          li.fragment Devices
+            p.
+              A device can be anything that has a connection to the Internet
+              and that can push data into the cloud. However, devices cannot
+              communicate directly with other devices, instead devices accept
+              commands from applications, and send events to applications.
+              Devices in the Watson IoT Platform are identified by a unique
+              authentication token. Devices must be registered before they can
+              connect to the Watson IoT Platform.
+            p.
+              The Watson IoT Platform recognizes two classes of device; managed
+              devices and unmanaged devices.
+
+          li.fragment Managed Devices
+            p.
+              Managed devices are defined as devices that contain a device
+              management agent. A device management agent is a set of logic
+              that allows the device to interact with the Watson IoT Platform
+              Device Management service by using the Device Management Protocol.
+              Managed devices can perform device management operations,
+              including location updates, firmware downloads and updates,
+              reboots, and factory resets.
+
+          li.fragment Unmanaged Devices
+            p.
+              Unmanaged devices are all devices without a device management
+              agent. Unmanaged devices can connect to the Watson IoT Platform
+              and send and receive events and commands, but they cannot send
+              device management requests or perform device management
+              operations.
+
+          li.fragment Gateways
+            p.
+              Gateways are specialized devices that have the combined
+              capabilities of an application and a device, which allows them to
+              serve as access points for other devices. Devices that cannot
+              connect directly to the Internet can access the Watson IoT
+              Platform service by first connecting to the gateway device.
+            p.
+              Gateways must be registered before they can connect to the
+              service.
+
+          li.fragment Applications
+            p.
+              An application is anything that has a connection to the Internet
+              and interacts with data from devices and control the behavior of
+              those devices. Applications identify themselves with the Watson
+              IoT Platform by using an API key and a unique application ID.
+              Unlike devices, individual applications do not need to register
+              before they can connect to the Watson IoT Platform. However, they
+              must use a valid API key that has been previously registered.
+
+          li.fragment Events
+            p.
+              Events are the mechanism by which devices publish data to the
+              Watson IoT Platform. Devices control the content of their
+              messages, and assign a name for each event that is sent. The
+              Watson IoT Platform uses the credentials that are attached to
+              each event received to determine which device sent the event.
+              This architecture prevents devices from impersonating one another.
+            p.
+              Applications can process events in real time, and see the source
+              of the event and the data contained in the event. Applications
+              must be configured to define which devices and events they
+              subscribe to.
+
+          li.fragment Commands
+            p.
+              Events are the mechanism by which devices publish data to the
+              Watson IoT Platform. Devices control the content of their
+              messages, and assign a name for each event that is sent. The
+              Watson IoT Platform uses the credentials that are attached to
+              each event received to determine which device sent the event.
+              This architecture prevents devices from impersonating one another.
+            p.
+              Applications can process events in real time, and see the source
+              of the event and the data contained in the event. Applications
+              must be configured to define which devices and events they
+              subscribe to.
+
+  +slide(data-background="images/ibmcode-white.png")
+    h2 IoT for Insurance
+    h4 Architecture
+
+    img(alt="IoT for Insurance Architecture", src="images/iot-for-insurance-architecture.png")
+
+  +slide(data-background="images/ibmcode-white.png")
+    h2 IoT for Insurance
+
+    ul
+      li.fragment Wraps Watson Platform
+      li.fragment Dashboards
+      li.fragment APIs
+
+    ul
+      li.fragment Events
+      li.fragment Transformers
+      li.fragment Shields
+      li.fragment Actions
+
+    aside.notes
+      p.
+        The IoT for Insurance components work together as described in this
+        section. This organization is also shown in the architecture diagram.
+        The IoT for Insurance dashboard displays data stored in the Watson IoT
+        Platform and in the IBM® Cloudant® NoSQL DB for Bluemix® database. The
+        user's smart devices can be connected either through the cloud or
+        directly to the Watson IoT Platform. If they are connected through the
+        cloud, they send data to the Transformer, which processes the data and
+        sends it onto the Watson IoT Platform. Data from Weather Company Data
+        for IBM® Bluemix® can also be pulled into the IoT for Insurance Weather
+        Company Data Transformer and from there into Watson IoT Platform. The
+        data is processed by the shield engine, which generates a shield event
+        and sends it through APIs to the Action Engine. The Action Engine can
+        optionally use IBM® Push Notifications for Bluemix® to send
+        notifications to the user's mobile application. The user can also use
+        the mobile application to respond to alerts or offers.
+
+      p.
+        Note: Earlier versions of IoT for Insurance used the IBM® Mobile Client
+        Access for Bluemix® service to process the responses and return them
+        through the APIs to Watson IoT Platform and then to the IoT for
+        Insurance dashboard. This process continues to work for instances of
+        the early versions of IoT for Insurance. However, new instances of IoT
+        for Insurance do not include Mobile Client Access or Push Notifications.
+        To use the mobile app, you must create a custom authentication process.
+        You can also optionally create and bind an instance of Push
+        Notifications to the API to enable push notifications.
+
+      ul
+        li.fragment Insurance dashboard
+          p.
+            The Insurance Dashboard gives insurance company users, such as
+            agents, a complete view of what is happening with their customers'
+            insured assets. They can see the shields and events at a country,
+            state, or account levels. The sample insurance dashboard is
+            loaded with simulated data to show you an example of the kind of
+            information that you can collect and analyze.
+
+        li.fragment Sample mobile app
+          p.
+            The Insurance Dashboard gives insurance company users, such as
+            agents, a complete view of what is happening with their customers'
+            insured assets. They can see the shields and events at a country,
+            state, or account levels.
+          p.
+            The sample insurance dashboard is
+            loaded with simulated data to show you an example of the kind of
+            information that you can collect and analyze.
+
+        li.fragment REST and real-time APIs
+          p.
+            The REST APIs are used by the mobile starter app, the insurance
+            dashboard, the shield engine, and the hazard controller. They
+            enable users to know the associations that exist between devices
+            and shields and actions. By using the APIs, programmers can create
+            new users, generate event data, create and register new shields,
+            and fetch event data.
+          p.
+            The API that you access from the service console is customized for
+            your instance of IoT for Insurance.
+
+        li.fragment Transformer
+          p.
+            The REST APIs are used by the mobile starter app, the insurance
+            dashboard, the shield engine, and the hazard controller. They
+            enable users to know the associations that exist between devices
+            and shields and actions. By using the APIs, programmers can create
+            new users, generate event data, create and register new shields,
+            and fetch event data.
+          p.
+            The API that you access from the service console is customized for
+            your instance of IoT for Insurance.
+
+        li.fragment Weather Company Data Transformer
+          p.
+            The Weather Company application injects relevant weather data from
+            the Weather Company Data Service into the IoT4I data stream.
+            This data can then be used to build weather enabled shields.
+
+        li.fragment Shield engine
+          p.
+            Based on the information that is stored in an event, the Shield
+            engine determines if a hazard such as a water leak occurred. If a
+            hazard is identified, it is passed to the Action Engine.
+          p.
+            A shield is a specific protection that a customer acquires from the
+            insurance provider. For example, a homeowner purchases insurance on
+            their home to shield it against fire, water damage, burglaries, and
+            other hazards. The IoT for Insurance solution provides a built-in
+            shield against water. Customers are alerted and can respond when an
+            event that involves water threatens their home. Using the REST API,
+            developers can add more shields.
+          p.
+            Shields run in the IoT for Insurance analytics engine. The
+            analytics engine identifies the type of hazard (for example, Water
+            is detected), the user account of the sensor that sent the hazard,
+            and the shields that are associated with the account. Action can be
+            taken based on that information. You can use or modify the shields
+            that are included in the IoT for Insurance shields library or you
+            can create and implement your own shields. For more information
+            about shields and the IoT for Insurance shields library , see the
+            Shield toolkit.
+
+        li.fragment Action engine
+          p.
+            The Action engine determines the actions to take based on the
+            information that is specified in the shield. You can create new
+            shields in JavaScript by using the IoT for Insurance API.
+
+  +slide(data-background="images/ibmcode-photo2.png")
+    h2 Demo: IoT for Insurance
+
+  +slide(data-background="images/ibmcode-green.png")
+    h2 Lab: Section 1
+    h4 Introduction to IoT for Insurance
+
+  +slide(data-background="images/ibmcode-white.png")
+    h2 Driver Behavior Use-Case
+
+    ul
+      li.fragment Auto Insurance
+      li.fragment Take action based on policy holder's driving behavior
+      li.fragment Analyzed in near-real time
+
+  +slide(data-background="images/ibmcode-white.png")
+    h2 Driver Behavior Use-Case
+    h4 Architecture
+
+    img(alt="Driver Behavior Use-Case Architecture", src="images/driver-behavior-use-case-architecture.png")
+
+  +slide(data-background="images/ibmcode-photo3.png")
+    h2 Demo: Driver Behavior Use-Case
+
+  +slide(data-background="images/ibmcode-green.png")
+    h2 Lab: Section 2
+    h4 Applying Business Logic to IoT for Insurance
+
+  +slide(data-background="images/ibmcode-white.png")
+    h2 Backseat Driver Chatbot
+    h4 Set the context
+
+  +slide(data-background="images/ibmcode-white.png")
+    h2 Backseat Driver Chatbot
+    h4 Architecture
+
+    img(alt="Backseat Chatbot Architecture", src="images/backseat-chatbot-architecture.png")
+
+  +slide(data-background="images/ibmcode-photo1.png")
+    h2 Demo: Chatbot
+
+  +slide(data-background="images/ibmcode-green.png")
+    h2 Lab: Section 3
+    h4 Backseat Driver Chatbot
+
+  // Section: Thank You
+  +slide(data-background="images/ibmcode-title-white.png")
+    h2= config.title
+    p= config.author.name
+    p= config.author.email
