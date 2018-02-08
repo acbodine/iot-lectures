@@ -1,0 +1,142 @@
+extends layouts/presentation
+
+block append config
+  -
+    config.title = 'IoT Analytics';
+    config.description = 'Edge systems design && dev with Golang.';
+
+    config.author = {
+      name: 'Andrew Bodine',
+      email: 'acbodine@us.ibm.com',
+    };
+
+    config.theme = 'ibm';
+  -
+
+block slides
+
+
+    //
+    // Introduction
+    //
+    +slide(data-background="images/ibmcode-white.png")
+        h1.no-margin= config.title
+        h3.no-margin= config.description
+        p= config.author.name
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3= config.title
+        p The process of inferring qualitative information, from quantitative streams of data.
+
+
+    //
+    // Why
+    //
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Reasons for focusing on this topic:
+        ul
+            li.fragment Analytics at the Edge.
+            li.fragment Constraints on IoT devices and their environments.
+            li.fragment Advocating for Golang as the right tool for the job.
+
+    +slide(data-background="images/ibmcode-green.png")
+        h3 Analytics at the Edge
+        ul
+            li.fragment Encapsulate analytics local to data source
+            li.fragment Ship to platform when necessary
+            li.fragment Distributed system
+    
+    +slide(data-background="images/ibmcode-green.png")
+        h3 Constraints on IoT Devices
+        ul
+            li.fragment Minimal system resources (memory, cpu, disk)
+            li.fragment Might be battery powered
+            li.fragment Limited connectivity, or bandwidth
+
+    +slide(data-background="images/ibmcode-green.png")
+        h3 Advocating for Golang
+        ul
+            li.fragment Ginkgo (TDD and BDD)
+            li.fragment Counterfeiter (faking it)
+            li.fragment Cross-compiled tests
+            li.fragment runtime.GOARCH and runtime.GOOS
+            li.fragment interface
+
+
+    //
+    // Problem Statement
+    //
+    +slide(data-background="images/ibmcode-white.png")
+        // TODO: Functional and Non-functional requirements of the edge system
+        // we are building in the (2hr) workshop.
+
+    +slide(data-background="images/ibmcode-green.png")
+        // Functional:
+        // 1. 
+
+    +slide(data-background="images/ibmcode-green.png")
+        // Non-Functional:
+        // 1. Maximize use of development resources/environments.
+        // 2. Cross-platform development and runtime.
+        // 3. On-Prem first.
+        // 4. Secure.
+
+        //
+        // Story
+        //
+        +slide(data-background="images/ibmcode-white.png")
+            h3.no-margin Basic Ideas
+            ul.no-margin
+                li.fragment Things
+                li.fragment Data (Temperature, Pressure, Location, etc)
+                li.fragment Controllers
+                li.fragment Thresholds (When temp is too high)
+                li.fragment Callbacks or actions that trigger
+
+        +slide(data-background="images/ibmcode-white.png")
+            h3.no-margin Things at the Edge
+            img(alt="Humidity Sensor", src="images/humidity-sensor.jpg")
+            img(alt="Pressure Sensor", src="images/pressure-sensor.jpg")
+            img(alt="Location Sensor", src="images/location-sensor.jpg")
+
+        +slide(data-background="images/ibmcode-white.png")
+            h3.no-margin Data at the Edge
+            // TODO: Code snippets of types of data structures at the edge.
+
+        +slide(data-background="images/ibmcode-white.png")
+            h3.no-margin Controllers at the Edge
+            // TODO: Desired features at the Edge.
+
+        +slide(data-background="images/ibmcode-white.png")
+            h3.no-margin Controllers at the Edge
+            img(alt="Arduino", src="images/arduino.jpg")
+            img(alt="Particle Electron", src="images/particle-electron.jpg")
+            img(alt="Raspberry Pi", src="images/raspberry-pi.jpg")
+
+        +slide(data-background="images/ibmcode-white.png")
+            h3.no-margin Thresholds at the Edge
+            
+
+        //
+        // Why
+        //
+        +slide(data-background="images/ibmcode-white.png")
+            h3 Reasons for focusing on this topic:
+            ul
+                li.fragment Analytics at the Edge.
+                li.fragment Constraints on IoT devices and their environments.
+                li.fragment Advocating for Golang as the right tool for the job.
+
+        +slide(data-background="images/ibmcode-green.png")
+            h3 Analytics at the Edge
+            ul
+                li.fragment Encapsulate analytics local to data source
+                li.fragment Ship to platform when necessary
+                li.fragment Distributed system
+        
+        +slide(data-background="images/ibmcode-green.png")
+            h3 Constraints on IoT Devices
+            ul
+                li.fragment Minimal system resources (memory, cpu, disk)
+                li.fragment Might be battery powered
+                li.fragment Limited connectivity, or bandwidth

@@ -1,0 +1,294 @@
+extends layouts/presentation
+
+block append config
+  -
+    config.title = 'Analytics';
+    config.description = 'at the Edge';
+
+    config.author = {
+      name: 'Andrew Bodine',
+      email: 'acbodine@us.ibm.com',
+    };
+
+    config.theme = 'ibm';
+  -
+
+block slides
+
+    //
+    // Introduction
+    //
+    +slide(data-background="images/ibmcode-title-white.png")
+        h1.no-margin= config.title
+        h3.no-margin= config.description
+        p= config.author.name
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 These slides are available at:
+        a(
+            href="https://acbodine.github.io/iot-edge-analytics.html"
+            target="_blank"
+        ) https://acbodine.github.io/iot-edge-analytics.html
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Agenda
+        ul
+            li.fragment What to expect?
+            li.fragment Edge Analytics: What and Why?
+            li.fragment Edge Analyitcs at IBM
+            li.fragment Demo: Hands-on with Patterns
+            li.fragment Helpful links + Next steps
+
+    +slide(data-background="images/imbcode-white.png")
+        h3 What should you expect to learn from this workshop?
+        ul
+            li.fragment Basic IoT and Analytics nomenclature
+            li.fragment What Edge Analytics means, and why it's worth your time.
+            li.fragment The general flow of implementing IoT Edge Analytics.
+            li.fragment Types of cloud offerings IBM has to plug into this model.
+            li.fragment Types of run-anywhere offerings IBM has to plug into this model.
+            li.fragment How to demo Edge Analytics in action.
+            li.fragment Where to go to learn more.
+        
+    //
+    // Edge Analytics: What and Why?
+    //
+    +slide(data-background="images/ibmcode-title-white.png")
+        h1 Introduction to IoT Edge Analytics
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3= config.title
+        p The process of inferring qualitative information, from quantitative streams of data.
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3= config.description
+        p For each edge in an IoT network tree
+        img(
+            alt="At the Edge Tree",
+            src="images/at-the-edge-tree.png",
+            style="border: none; box-shadow: none;"
+        )
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Edge Analytics is composed of:
+        ul
+            li.fragment Things (Devices at the Edge)
+            li.fragment Data (Temperature, Pressure, Location, etc)
+            li.fragment Controllers
+            li.fragment Thresholds (When temp is too high)
+            li.fragment Actions (When thresholds are crossed)
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Things at the Edge
+        img(
+            alt="Humidity Sensor",
+            src="images/humidity-sensor.jpg",
+            width="300",
+            style="border: none; box-shadow: none;"
+        )
+        img(
+            alt="Pressure Sensor",
+            src="images/pressure-sensor.jpg",
+            width="300",
+            style="border: none; box-shadow: none;"
+        )
+        img(
+            alt="Location Sensor",
+            src="images/location-sensor.png",
+            width="300",
+            style="border: none; box-shadow: none;"
+        )
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Data at the Edge
+        img(
+            alt="Example data at the edge"
+            src="images/sample-edge-data.jpg"
+            width="400"
+            style="border: none; box-shadow: none;"
+        )
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Controllers at the Edge
+        img(
+            alt="Arduino",
+            src="images/arduino.jpg",
+            width="300",
+            style="border: none; box-shadow: none;"
+        )
+        img(
+            alt="Particle Electron",
+            src="images/particle-electron.jpg",
+            width="300",
+            style="border: none; box-shadow: none;"
+        )
+        img(
+            alt="Raspberry Pi",
+            src="images/raspberry-pi.jpg",
+            width="300",
+            style="border: none; box-shadow: none;"
+        )
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 What is the general flow of IoT Edge Analytics?
+        img(
+            alt="General IoT Edge Analytics flow",
+            src="images/general-flow.jpg",
+            width="700",
+            style="border: none; box-shadow: none;"
+        )
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Why are Edge Analytics important?
+        ul
+            li.fragment Constraints on IoT devices and their environments.
+            li.fragment Saves you $
+            li.fragment Less traffic clutter.
+            li.fragment More devices using same bandwidth
+
+    +slide(data-background="images/oil-data.jpg")
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Why are Edge Analytics overlooked?
+        ul
+            li.fragment Lack of domain knowledge
+            li.fragment Focus of existing documentation and tutorials
+            li.fragment Slightly harder to implement
+
+    //
+    // Edge Analyitcs at IBM
+    //
+    +slide(data-background="images/ibmcode-title-white.png")
+        h1 Edge Analyitcs at IBM
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Offerings related to general Edge Analytics flow
+        ul
+            li.fragment Local Analytics
+            li.fragment Messaging
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Run Anywhere: Local Analytics
+        img(
+            alt="Local Analytics Offerings",
+            src="images/apache-edgent.png",
+            width="250",
+            style="border: none; box-shadow: none;"
+        )
+        br
+        iframe(
+            width="600"
+            height="350"
+            src="https://www.youtube.com/embed/Xqns7yVNDnk"
+            frameborder="0"
+            allow="encrypted-media"
+            allowfullscreen=""
+        )
+        br
+        a(
+            href="http://edgent.apache.org",
+            target="_blank"
+        ) Apache Edgent Documentation
+        br
+        a(
+            href="https://www.ibm.com/developerworks/community/groups/service/html/communitystart?communityUuid=3df173af-0c21-4b9c-9fd1-e8e5561ef460&ftHelpTip=true",
+            target="_blank"
+        ) Watson IoT Platform Documentation
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Cloud: Messaging
+        img(
+            alt="Watson IoT Platform",
+            src="images/watson-iot-platform-offering.jpg",
+            width="300",
+            style="border: none; box-shadow: none;"
+        )
+        br
+        img(
+            alt="Watson IoT Platform Diagram",
+            src="images/watson-iot-platform-offering-diagram.jpg"
+            width="600",
+            style="border: none; box-shadow: none;"
+        )
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Advanced Analytics flow with IBM Offerings
+        img(
+            alt="Advanced IoT Architecture",
+            src="images/architecture.png",
+            width="600",
+            style="border: none; box-shadow: none;"
+        )
+
+    //
+    // Demo: Hands-on with Patterns
+    //
+    +slide(data-background="images/ibmcode-title-white.png")
+        h3 Hands-on with IoT Patterns
+
+        iframe(
+            width="1280"
+            height="500"
+            src="https://www.youtube.com/embed/FX5qN2iOgV0?start=49"
+            frameborder="0"
+            allow="encrypted-media"
+            allowfullscreen=""
+        )
+
+        a(href="https://developer.ibm.com/code/patterns/detect-voltage-anomalies-in-household-iot-devices/") Pattern
+        br
+        a(href="https://github.com/IBM/CognitiveIoT?cm_sp=IBMCode-_-detect-voltage-anomalies-in-household-iot-devices-_-Get-the-Code") Code
+
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Where to go from here?
+        p.
+            Now that we have covered the basics, you can follow the link below
+            to dig deeper into the solution and expand on the Cognitive components.
+        a(href="https://developer.ibm.com/recipes/tutorials/realtime-anomaly-detection-on-the-iot-edge-using-nodered-and-moving-zscore/?ca=dw--dwtv--DiscoveringDataScience-_-show") Dig Deeper
+
+    //
+    // Helpful Links + Where to go Next
+    //
+    +slide(data-background="images/ibmcode-white.png")
+        h3 Links for continued learning
+        ul
+            li.fragment
+                a(
+                    href="https://developer.ibm.com/code/technologies/iot",
+                    target="_blank"
+                ) Patterns
+            li.fragment
+                a(
+                    href="https://developer.ibm.com/code/labs"
+                    target="_blank"
+                ) Labs
+            li.fragment
+                a(
+                    href="https://developer.ibm.com/code/blogs"
+                    target="_blank"
+                ) Blogs
+
+    //
+    // Q & A
+    //
+    +slide(data-background="images/ibmcode-title-white.png")
+        h2 Questions?
+
+    //
+    // Following Up
+    //
+    +slide(data-background="images/ibmcode-white.png")
+        h2 Following Up
+        p.
+            If you want to ask a question pertaining to this content please
+            feel free to open an issue in the repository where I maintain it:
+        br
+        a(
+            href="https://github.com/acbodine/iot-lectures"
+            target="_blank"
+        ) https://github.com/acbodine/iot-lectures
+
+    +slide(data-background="images/ibmcode-title-white-white.png")
+        h3.no-margin Thank You
+        p= config.author.name
+        p= config.author.email

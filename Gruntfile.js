@@ -101,6 +101,7 @@ module.exports = function(grunt) {
 					"iot-in-10-minutes.html": "templates/iot-in-10-minutes.pug",
 					"connecting-all-the-things.html": "templates/connecting-all-the-things.pug",
 					"iot-for-insurance.html": "templates/iot-for-insurance.pug",
+					"iot-edge-analytics.html": "templates/iot-edge-analytics.pug",
 				}
 			}
 		},
