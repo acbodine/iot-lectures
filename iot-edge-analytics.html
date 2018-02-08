@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Analytics</title>
+    <meta name="description" content="at the Edge">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link id="theme" rel="stylesheet" href="css/theme/ibm.css">
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+      
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!---->
+        <!-- Introduction-->
+        <!---->
+        <section data-background="images/ibmcode-title-white.png">
+          <h1 class="no-margin">Analytics</h1>
+          <h3 class="no-margin">at the Edge</h3>
+          <p>Andrew Bodine</p>
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>These slides are available at:</h3><a href="https://acbodine.github.io/iot-edge-analytics.html" target="_blank">https://acbodine.github.io/iot-edge-analytics.html</a>
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Agenda</h3>
+          <ul>
+            <li class="fragment">What to expect?</li>
+            <li class="fragment">Edge Analytics: What and Why?</li>
+            <li class="fragment">Edge Analyitcs at IBM</li>
+            <li class="fragment">Demo: Hands-on with Patterns</li>
+            <li class="fragment">Helpful links + Next steps</li>
+          </ul>
+        </section>
+        <section data-background="images/imbcode-white.png">
+          <h3>What should you expect to learn from this workshop?</h3>
+          <ul>
+            <li class="fragment">Basic IoT and Analytics nomenclature</li>
+            <li class="fragment">What Edge Analytics means, and why it's worth your time.</li>
+            <li class="fragment">The general flow of implementing IoT Edge Analytics.</li>
+            <li class="fragment">Types of cloud offerings IBM has to plug into this model.</li>
+            <li class="fragment">Types of run-anywhere offerings IBM has to plug into this model.</li>
+            <li class="fragment">How to demo Edge Analytics in action.</li>
+            <li class="fragment">Where to go to learn more.</li>
+          </ul>
+        </section>
+        <!---->
+        <!-- Edge Analytics: What and Why?-->
+        <!---->
+        <section data-background="images/ibmcode-title-white.png">
+          <h1>Introduction to IoT Edge Analytics</h1>
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Analytics</h3>
+          <p>The process of inferring qualitative information, from quantitative streams of data.</p>
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>at the Edge</h3>
+          <p>For each edge in an IoT network tree</p><img alt="At the Edge Tree" src="images/at-the-edge-tree.png" style="border: none; box-shadow: none;">
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Edge Analytics is composed of:</h3>
+          <ul>
+            <li class="fragment">Things (Devices at the Edge)</li>
+            <li class="fragment">Data (Temperature, Pressure, Location, etc)</li>
+            <li class="fragment">Controllers</li>
+            <li class="fragment">Thresholds (When temp is too high)</li>
+            <li class="fragment">Actions (When thresholds are crossed)</li>
+          </ul>
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Things at the Edge</h3><img alt="Humidity Sensor" src="images/humidity-sensor.jpg" width="300" style="border: none; box-shadow: none;"><img alt="Pressure Sensor" src="images/pressure-sensor.jpg" width="300" style="border: none; box-shadow: none;"><img alt="Location Sensor" src="images/location-sensor.png" width="300" style="border: none; box-shadow: none;">
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Data at the Edge</h3><img alt="Example data at the edge" src="images/sample-edge-data.jpg" width="400" style="border: none; box-shadow: none;">
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Controllers at the Edge</h3><img alt="Arduino" src="images/arduino.jpg" width="300" style="border: none; box-shadow: none;"><img alt="Particle Electron" src="images/particle-electron.jpg" width="300" style="border: none; box-shadow: none;"><img alt="Raspberry Pi" src="images/raspberry-pi.jpg" width="300" style="border: none; box-shadow: none;">
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>What is the general flow of IoT Edge Analytics?</h3><img alt="General IoT Edge Analytics flow" src="images/general-flow.jpg" width="700" style="border: none; box-shadow: none;">
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Why are Edge Analytics important?</h3>
+          <ul>
+            <li class="fragment">Constraints on IoT devices and their environments.</li>
+            <li class="fragment">Saves you $</li>
+            <li class="fragment">Less traffic clutter.</li>
+            <li class="fragment">More devices using same bandwidth</li>
+          </ul>
+        </section>
+        <section data-background="images/oil-data.jpg">
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Why are Edge Analytics overlooked?</h3>
+          <ul>
+            <li class="fragment">Lack of domain knowledge</li>
+            <li class="fragment">Focus of existing documentation and tutorials</li>
+            <li class="fragment">Slightly harder to implement</li>
+          </ul>
+        </section>
+        <!---->
+        <!-- Edge Analyitcs at IBM-->
+        <!---->
+        <section data-background="images/ibmcode-title-white.png">
+          <h1>Edge Analyitcs at IBM</h1>
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Offerings related to general Edge Analytics flow</h3>
+          <ul>
+            <li class="fragment">Local Analytics</li>
+            <li class="fragment">Messaging</li>
+          </ul>
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Run Anywhere: Local Analytics</h3><img alt="Local Analytics Offerings" src="images/apache-edgent.png" width="250" style="border: none; box-shadow: none;"><br>
+          <iframe width="600" height="350" src="https://www.youtube.com/embed/Xqns7yVNDnk" frameborder="0" allow="encrypted-media" allowfullscreen=""></iframe><br><a href="http://edgent.apache.org" target="_blank">Apache Edgent Documentation</a><br><a href="https://www.ibm.com/developerworks/community/groups/service/html/communitystart?communityUuid=3df173af-0c21-4b9c-9fd1-e8e5561ef460&amp;ftHelpTip=true" target="_blank">Watson IoT Platform Documentation</a>
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Cloud: Messaging</h3><img alt="Watson IoT Platform" src="images/watson-iot-platform-offering.jpg" width="300" style="border: none; box-shadow: none;"><br><img alt="Watson IoT Platform Diagram" src="images/watson-iot-platform-offering-diagram.jpg" width="600" style="border: none; box-shadow: none;">
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Advanced Analytics flow with IBM Offerings</h3><img alt="Advanced IoT Architecture" src="images/architecture.png" width="600" style="border: none; box-shadow: none;">
+        </section>
+        <!---->
+        <!-- Demo: Hands-on with Patterns-->
+        <!---->
+        <section data-background="images/ibmcode-title-white.png">
+          <h3>Hands-on with IoT Patterns</h3>
+          <iframe width="1280" height="500" src="https://www.youtube.com/embed/FX5qN2iOgV0?start=49" frameborder="0" allow="encrypted-media" allowfullscreen=""></iframe><a href="https://developer.ibm.com/code/patterns/detect-voltage-anomalies-in-household-iot-devices/">Pattern</a><br><a href="https://github.com/IBM/CognitiveIoT?cm_sp=IBMCode-_-detect-voltage-anomalies-in-household-iot-devices-_-Get-the-Code">Code</a>
+        </section>
+        <section data-background="images/ibmcode-white.png">
+          <h3>Where to go from here?</h3>
+          <p>
+            Now that we have covered the basics, you can follow the link below
+            to dig deeper into the solution and expand on the Cognitive components.
+          </p><a href="https://developer.ibm.com/recipes/tutorials/realtime-anomaly-detection-on-the-iot-edge-using-nodered-and-moving-zscore/?ca=dw--dwtv--DiscoveringDataScience-_-show">Dig Deeper</a>
+        </section>
+        <!---->
+        <!-- Helpful Links + Where to go Next-->
+        <!---->
+        <section data-background="images/ibmcode-white.png">
+          <h3>Links for continued learning</h3>
+          <ul>
+            <li class="fragment"><a href="https://developer.ibm.com/code/technologies/iot" target="_blank">Patterns</a></li>
+            <li class="fragment"><a href="https://developer.ibm.com/code/labs" target="_blank">Labs</a></li>
+            <li class="fragment"><a href="https://developer.ibm.com/code/blogs" target="_blank">Blogs</a></li>
+          </ul>
+        </section>
+        <!---->
+        <!-- Q & A-->
+        <!---->
+        <section data-background="images/ibmcode-title-white.png">
+          <h2>Questions?</h2>
+        </section>
+        <!---->
+        <!-- Following Up-->
+        <!---->
+        <section data-background="images/ibmcode-white.png">
+          <h2>Following Up</h2>
+          <p>
+            If you want to ask a question pertaining to this content please
+            feel free to open an issue in the repository where I maintain it:
+          </p><br><a href="https://github.com/acbodine/iot-lectures" target="_blank">https://github.com/acbodine/iot-lectures</a>
+        </section>
+        <section data-background="images/ibmcode-title-white-white.png">
+          <h3 class="no-margin">Thank You</h3>
+          <p>Andrew Bodine</p>
+          <p>acbodine@us.ibm.com</p>
+        </section>
+      </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        history: true,
+        transition: 'none',
+        backgroundTransition: 'none',
+      
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+      
+    </script>
+  </body>
+</html>
